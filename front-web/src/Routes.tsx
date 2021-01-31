@@ -9,7 +9,7 @@ const Routes = () =>  (
     <BrowserRouter>
     <Navbar />
     <Switch>
-        <Route path="/">
+        <Route path="/" exact>
             <Home />
         </Route>
         <Route path="/catalog">
