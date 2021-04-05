@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ProductsResponse } from '../../core/types/Product';
-import { makeRequest } from '../../core/utils/request';
+import { ProductsResponse } from 'core/types/Product';
+import { makeRequest } from 'core/utils/request';
 import ProductCard from './components/ProductCard';
+import ProductCardLoader from './components/Loaders/ProductCardLoader';
 import './styles.scss';
 
 const Catalog  = () => {    
     const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
-
-    console.log(productsResponse);
+    const [isLoading, setIsLoading] = useState(false);
 
    
     useEffect(() => {
@@ -17,10 +17,16 @@ const Catalog  = () => {
             linesPerPage: 12
 
         }
+       
+        setIsLoading(true)
         makeRequest({ url: '/products', params})
-        .then(response => setProductsResponse(response.data));
+        .then(response => setProductsResponse(response.data))
+        .finally(() => {
+        
+            setIsLoading(false)
+        })
 
-    }, [])
+    }, []);
 
  return (
     
@@ -30,12 +36,16 @@ const Catalog  = () => {
     
             </h1>
             <div className="catalog-products">
-            {productsResponse?.content.map(product => (
-                <Link to={`/products/${product.id}`} key={product.id}>
-                    <ProductCard product={product} />
-                    </Link>
-    
-            ))}
+                {isLoading ? <ProductCardLoader /> : (
+                    productsResponse?.content.map(product => (
+                        <Link to={`/products/${product.id}`} key={product.id}>
+                            <ProductCard product={product} />
+                            </Link>
+            
+                    ))
+
+                        )}
+            
             </div>
         </div>
     
