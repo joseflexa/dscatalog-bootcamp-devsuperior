@@ -48,14 +48,10 @@ public class ProductService {
 	public ProductDTO insert(ProductDTO dto) {
 		Product entity = new Product();
 		copyDtoEntity(dto, entity);
-		//entity.setName(dto.getName());
 		entity = repository.save(entity);
 		return new ProductDTO(entity);
 		
-	}
-
-	
-		
+	}		
 	
 
 	@Transactional
@@ -63,7 +59,6 @@ public class ProductService {
 		try {
 		Product entity = repository.getOne(id);
 		copyDtoEntity(dto, entity);
-		//entity.setName(dto.getName());
 		entity = repository.save(entity);
 		return new ProductDTO(entity);
 		}
@@ -97,7 +92,8 @@ public class ProductService {
 			entity.getCategories().clear();
 			for(CategoryDTO catDto : dto.getCategories()) {
 				Category category = categoryRepository.getOne(catDto.getId());
-				entity.getCategories().add(category);	}
+				entity.getCategories().add(category);	
+				}
 		
 		}
 

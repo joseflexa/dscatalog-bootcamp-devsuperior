@@ -47,7 +47,7 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public UserDTO  findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		User entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not fouond"));
+		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not fouond"));
 		return new UserDTO(entity);
 	}
 
