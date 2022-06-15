@@ -88,7 +88,7 @@ public class UserService  implements UserDetailsService{
 
 	public void delete(Long id) {
 		try {
-		repository.deleteById(id);
+			repository.deleteById(id);
 
 		}
 		catch (EmptyResultDataAccessException e) {
@@ -104,8 +104,6 @@ public class UserService  implements UserDetailsService{
 			entity.setFirstName(dto.getFirstName());
 			entity.setLastName(dto.getLastName());
 			entity.setEmail(dto.getEmail());
-			
-			
 			
 			entity.getRoles().clear();
 			for(RoleDTO roleDto : dto.getRoles()) {
